@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - input.yml     
+  tasks:
+    - name: "Check number of VMs to create"
+      fail: 
+        msg: "{{ vms|length }} exceeds threshold (5)"
+      when: vms|length > 5
+
+    - include_tasks: provision_vm.yml 
+      loop: 
+        "{{ vms }} "
+      when: vms|length <= 5
+      no_log: True

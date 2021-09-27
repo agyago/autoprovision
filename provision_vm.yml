@@ -1,0 +1,57 @@
+---
+   
+- name:  Clone Linux VM template
+  community.vmware.vmware_guest:
+    hostname: "{{ vc_hostname }}"
+    username: "{{ vc_username }}"
+    password: "{{ vc_pwd }}"
+    validate_certs: no
+    datacenter: "{{ item.dc }}"
+    state: present
+    folder: "/{{ item.dc }}/vm/placeholder"
+    name: "{{ item.name }}"
+    cluster: "{{ item.cluster }}"
+    template: "/{{ item.dc }}/vm/Templates/{{ item.template }}"
+    disk:
+    - size_gb: "{{ item.disk|int + 3 }}"
+      type: thin
+      datastore: "{{ item.data_store }}"
+    hardware:
+      memory_mb: "{{ item.memory }}"
+      num_cpus: "{{ item.cpu }}"
+    networks:
+      - name: "{{ item.vm_net }}"
+        type: static
+        ip: "{{ item.ip }}"
+        netmask: "{{ item.netmask }}"
+        gateway: "{{ item.gateway }}"
+        start_connected: True
+    wait_for_ip_address: True
+    customization:
+      domain: "{{ item.domain }}"
+      hostname: "{{ item.name }}"
+      dns_servers:
+        - 172.29.137.106
+        - 172.29.138.102
+        - 172.29.19.102
+        - 172.29.17.125
+      dns_suffix:
+        - example.com
+  register: vm
+  delegate_to: localhost  
+
+- name: Install Puppet client for the first time
+  vmware_vm_shell:
+    hostname: "{{ vc_hostname }}"
+    username: "{{ vc_username }}"
+    password: "{{ vc_pwd }}"
+    validate_certs: no
+    datacenter: "{{ item.dc }}"
+    folder: "/{{ item.dc }}/vm/VMs"
+    vm_id_type: instance_uuid
+    vm_id: "{{ vm.instance.instance_uuid }}"
+    vm_username: root
+    vm_password: "{{ guest_root_pwd }}"
+    vm_shell: "/usr/bin/curl"
+    vm_shell_args: "-ks https://puppethostserver:8140/packages/current/install.bash | sudo bash"
+  delegate_to: localhost

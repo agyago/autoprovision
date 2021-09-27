@@ -1,0 +1,121 @@
+{
+	"dc": 
+	{
+        "small":
+            {
+                "cpu"   : "2",
+                "memory": "2048",
+            },
+        "medium":
+            {
+                "cpu"   : "4",
+                "memory" : "8192",
+            },
+        "large":
+            {
+                "cpu"    : "8",
+                "memory" : "16384"
+            },
+        "xlarge":
+            {
+                "cpu"    : "16",
+                "memory" : "32768"
+            },
+		"dc1":
+			{
+			"name": "dc1",
+			"domain": "example.com",
+			"templates":
+				{
+					"centos":
+						{
+							"7": "Linux/CENTOS/CENTOS7/CENTOS7",
+						},
+					"debian":
+						{
+							"10": "Linux/DEBIAN/DEBIAN10/DEBIAN10"
+						}
+				},
+			"env":
+				{
+				"prod": {"cluster": "PROD", "datastore": "PROD1" },
+				"dev": {"cluster": "DEV", "datastore": "DEV1" }
+				},
+			"network":
+				[
+					{
+						"name": "VLAN_400",
+						"netrange": "172.29.32.0/22", 
+						"netmask": "255.255.252.0",
+						"gateway": "172.29.32.1"	
+					},
+					{
+						"name": "VLAN_401",
+						"netrange": "172.29.36.0/22",
+						"netmask": "255.255.252.0",
+						"gateway": "172.29.36.1"
+					},
+					{
+						"name": "VLAN_404",
+						"netrange": "172.29.48.0/24",
+						"netmask": "255.255.255.0",
+						"gateway": "172.29.48.1"
+					},
+					{
+						"name": "VLAN_405",
+						"netrange": "172.29.49.0/24",
+						"netmask": "255.255.255.0",
+						"gateway": "172.29.49.1"
+					}
+				]
+			},
+		"dc2":
+			{
+			"name": "dc2",
+			"domain": "example.com",
+			"templates":
+				{
+					"centos":
+						{
+							"7": "Linux/CENTOS/CENTOS7/CENTOS7",
+						},
+					"debian":
+						{
+							"10": "Linux/DEBIAN/DEBIAN10/DEBIAN10",
+						}
+				},
+			"env":
+				{
+				"prod": {"cluster": "PROD", "datastore": "PROD1" },
+				"dev": {"cluster": "DEV", "datastore": "DEV1" }
+				},
+			"network":
+				[
+					{
+						"name": "DC2_400",
+						"netrange": "172.29.160.0/22",
+						"netmask": "255.255.252.0",
+						"gateway": "172.29.160.1"	
+					},
+					{
+						"name": "DC2_401",
+						"netrange": "172.29.164.0/22",
+						"netmask": "255.255.252.0",
+						"gateway": "172.29.164.1"
+					},
+					{
+						"name": "DC2_404",
+						"netrange": "172.29.176.0/24",
+						"netmask": "255.255.255.0",
+						"gateway": "172.29.176."
+					},
+					{
+						"name": "DC2_405",
+						"netrange": "172.29.177.0/24",
+						"netmask": "255.255.255.0",
+						"gateway": "172.29.177.1"
+					}
+				]
+			}
+	}
+}

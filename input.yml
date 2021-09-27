@@ -1,0 +1,15 @@
+vms:
+- DC: dc2
+  cluster: DEV
+  cpu: '2'
+  data_store: DEV1
+  disk: '100'
+  gateway: 172.29.160.1
+  ip: 172.29.160.50
+  memory: '2048'
+  name: test.example.com
+  netmask: 255.255.252.0
+  os: centos
+  template:
+    '7': Linux/CENTOS/CENTOS7/CENTOS7
+  vm_net: DC2_400
