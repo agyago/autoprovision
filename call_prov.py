@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import argparse
 import yaml
-import ansible_runner
+import ansible_runner # require too install ansible_runner and ansible module
 import getpass
 import os
 import json
